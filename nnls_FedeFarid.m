@@ -28,7 +28,7 @@ function [x,e,t]=nnls_FedeFarid(A,b,x0,timelimit,choix)
   
   alpha = 0.9; %necessaire pour la methode du gradient accelere
   iter  = 0;
-  maxiter = 200;
+  maxiter = ;
   while cputime-temps<=timelimit
     iter=iter+1;
     
@@ -61,7 +61,7 @@ function [x,e,t]=nnls_FedeFarid(A,b,x0,timelimit,choix)
     
     if choix==3
       n = length(x);
-      grad = AtA*x0-Atb;
+      grad = AtA*x-Atb;
       for i=1:maxiter
         x_n = x;
         %itéré précédent
