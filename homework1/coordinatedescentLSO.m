@@ -14,12 +14,18 @@ function x=coordinatedescentLSO(A,b,x0,maxiter)
     C= A'*b;
     grad = Q*x0-C;
   for i=1:maxiter
+    x_n = x;
     %itéré précédent
     j=mod(i, length(x))+1;
     
     %La mise à jour à effectuer
-    x(j) = x(j)-grad(j)/Q(j,j);
-    grad=Q*x-C;
+    x_n(j) = x(j)-grad(j)/Q(j,j);
+    delta = x_n-x;
+    x(j)=x_n(j);
+    %Au lieu de recalculer à chaque fois le gradient 
+    % on écrit juste la misé à jour
+    %grad=Q*x-C; 
+    grad = grad + Q(:,j)*delta(j);
    
   end
   fprintf('Nombre diteration '); i
