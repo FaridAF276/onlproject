@@ -11,6 +11,6 @@ xopt=Q\c;
 fopt = 0.5*xopt'*Q*xopt-c'*xopt+p;
 
 %Graphes des erreurs
-semilogy(1:maxiter,abs(e_0-fopt),'b'); hold on;
-semilogy(1:maxiter,abs(e_1-fopt)); hold on;
-semilogy(1:maxiter,abs(e_2-fopt),'r'); hold on;
+semilogy(1:maxiter,abs(e_0-fopt),'b'); hold on; %courbe bleue gradient
+semilogy(1:maxiter,abs(e_1-fopt)); hold on; %courbe bleueu clair acc1
+semilogy(1:maxiter,abs(e_2-fopt),'r'); hold on;%courbe rouge acc2

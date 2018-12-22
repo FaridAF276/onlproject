@@ -12,7 +12,7 @@ function [x,e]=gradient(Q,c,p,x0,maxiter)
   
   L = max(eig(Q));
   x = x0; %itéré initial
-  d=c-Q*x0; %direction initale
+  d=c-Q*x0; %direction initale gradient
   for i=1:maxiter
     
     x_n=x+(1/L)*d; %calcule de nouvel itéré

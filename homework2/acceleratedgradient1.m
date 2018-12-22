@@ -12,7 +12,7 @@ function [x,e]=acceleratedgradient1(Q,c,p,x0,maxiter)
   
   L = max(eig(Q));
   x= y_k = x0;
-  alpha=0.5; %valeur initiale de alpha
+  alpha=0.2; %valeur initiale de alpha (optimale 0.3)
 	
   for i=1:maxiter
     %Calculs des paramètres
