@@ -14,7 +14,7 @@ timelimit=30;
 
 W0=%COMPLETER ICI
 H0=%COMPLETER ICI
-[W,H,e,t]=nmf_nomequipe(Xtemp,W0,H0,timelimit);
+[W,H,e,t]=nmf_FedeFarid(Xtemp,W0,H0,timelimit);
 
 %Affichage du facteur W
 affichage(W,4,19,19);

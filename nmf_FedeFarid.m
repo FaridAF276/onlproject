@@ -1,4 +1,4 @@
-function [W,H,e,t]=nmf_nomequipe(X,W0,H0,timelimit)
+function [W,H,e,t]=nmf_FedeFarid(X,W0,H0,timelimit)
   % Entrees :
   % X est une matrice m x n
   % W0 est une matrice m x r

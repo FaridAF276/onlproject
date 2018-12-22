@@ -5,7 +5,7 @@ W0=%COMPLETER ICI
 H0=%COMPLETER ICI
 
 timelimit=10;
-[W,H,e,t]=nmf_nomequipe(X,W0,H0,timelimit);
+[W,H,e,t]=nmf_FedeFarid(X,W0,H0,timelimit);
 
 %Graphes de l'erreur
 semilogy(t,e);

@@ -1,4 +1,4 @@
-function [x,e,t]=nnls_nomequipe(A,b,x0,timelimit,choix)
+function [x,e,t]=nnls_FedeFarid(A,b,x0,timelimit,choix)
   % Entrees :
   % A est une matrice m x n
   % b est un vecteur m x 1

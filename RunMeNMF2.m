@@ -12,17 +12,17 @@ timelimit=10;
 
 W0=%COMPLETER ICI
 H0=%COMPLETER ICI
-[W1,H1,e,t]=nmf_nomequipe(X1,W0,H0,timelimit);
+[W1,H1,e,t]=nmf_FedeFarid(X1,W0,H0,timelimit);
 X1t=W1*H1;
 
 W0=%COMPLETER ICI
 H0=%COMPLETER ICI
-[W2,H2,e,t]=nmf_nomequipe(X2,W0,H0,timelimit);
+[W2,H2,e,t]=nmf_FedeFarid(X2,W0,H0,timelimit);
 X2t=W2*H2;
 
 W0=%COMPLETER ICI
 H0=%COMPLETER ICI
-[W3,H3,e,t]=nmf_nomequipe(X3,W0,H0,timelimit);
+[W3,H3,e,t]=nmf_FedeFarid(X3,W0,H0,timelimit);
 X3t=W3*H3;
 
 I(:,:,1)=uint8(X1t);
