@@ -18,7 +18,7 @@ function [x,e,t]=nnls_FedeFarid(A,b,x0,timelimit,choix)
   Atb = A'*b;
   btb = b'*b;
   L   = max(eig(AtA));
-  gamma = .....; %COMPLETER ICI
+  gamma = -((Atb'*x0)/(x0'*AtA*x0))
   x     = gamma*x0;
   
   %Initialisation des vecteurs erreurs et temps
@@ -28,21 +28,53 @@ function [x,e,t]=nnls_FedeFarid(A,b,x0,timelimit,choix)
   
   alpha = 0.9; %necessaire pour la methode du gradient accelere
   iter  = 0;
+  maxiter = 200;
   while cputime-temps<=timelimit
     iter=iter+1;
     
     if choix==1
-      %COMPLETER ICI
+      d=Atb-AtA*x; %dir initale
+      for i=1:maxiter
+    
+        x_n=x+(1/L)*d; %calcule de nouvel itéré
+        x=x_n; %nouvel itéré
+        d=Atb-AtA*x; %nouvelle direction
+      end
     end
     
     if choix==2
-      %COMPLETER ICI
+       x= y_k = x0;
+      for i=1:maxiter
+        %Calculs des paramètres
+        alpha_n=0.5*(sqrt(alpha^4 + 4*alpha^2)-alpha^2);
+        b_k = (alpha*(1-alpha))/((alpha^2)+alpha_n);
+        
+        %Calculs des points : 
+        
+        x_n = y_k-(1/L)*(AtA*y_k-Atb);
+        y_k = x_n + b_k *(x_n-x);
+        x=x_n;
+        alpha=alpha_n;
+      end
     end
     
     
     if choix==3
       n = length(x);
-      %COMPLETER ICI
+      grad = AtA*x0-Atb;
+      for i=1:maxiter
+        x_n = x;
+        %itéré précédent
+        j=mod(i, length(x))+1;
+        
+        %La mise à jour à effectuer
+        x_n(j) = x(j)-grad(j)/AtA(j,j);
+        delta = x_n-x;
+        x(j)=x_n(j);
+       
+        grad = grad + AtA(:,j)*delta(j);
+   
+      end
     end   
     
     %Calcul du temps et de l'erreur
