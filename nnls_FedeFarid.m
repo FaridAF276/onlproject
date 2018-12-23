@@ -56,17 +56,20 @@ function [x,e,t]=nnls_FedeFarid(A,b,x0,timelimit,choix)
     
     
     if choix==3
-        x_n = x;
-        %itéré précédent
-        [ix, j]=max(grad); %on cherche la plus gd compo du grad
-        %La mise à jour à effectuer
-        x_n(j) = x(j)-grad(j)/AtA(j,j);
-        if(x_n(j)<0)
-          x(j)=x_n(j)=0;
-        endif
-        delta = x_n-x;
-        grad = grad + AtA(:,j)*delta(j);
-        x_n = x;
+        n=length(x); 
+        [S,O] = sort(grad, 'descend'); 
+        for i = 1:n
+          j=O(i);
+          x_n = x;
+          %La mise à jour à effectuer
+          x_n(j) = x(j)-grad(j)/AtA(j,j);
+          if(x_n(j)<0)
+            x_n(j)=0;
+          endif
+          delta = x_n-x;
+          grad = grad + AtA(:,j)*delta(j);
+          x=x_n;
+        end
     end   
     
     %Calcul du temps et de l'erreur
