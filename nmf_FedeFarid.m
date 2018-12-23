@@ -22,22 +22,25 @@ function [W,H,e,t]=nmf_FedeFarid(X,W0,H0,timelimit)
   scale = sum(sum(A.*W0))/sum(sum(B.*(W0'*W0)));
   W=W0*scale;
   H=H0;
-  
+  alpha = 0.3;
   %Initialisation des vecteurs erreurs et temps
   temps = cputime;
   t     = 0;
-  e     = nX-2*sum(sum(A.*W))+sum(sum(B.*(W'*W)))
+  e     = nX-2*sum(sum(A.*W))+sum(sum(B.*(W'*W)));
   
   iter  = 0;
   while cputime-temps<=timelimit
-    iter=iter+1;
-    
     %Optimisation de H
     %COMPLETER ICI
-    
+    for i=1:n
+      [H(:,i),~,~]=nnls_FedeFarid(W0,X(:,i),H0(:,i),timelimit,2);
+    end 
     %Optimisation de W
     %COMPLETER ICI
-    
+    for j=1:m
+      [rep,~,~]= nnls_FedeFarid(H0',X(j,:)',W0(j,:)',timelimit,2);
+      W(j,:)=rep';
+    end
     %Calcul du temps et de l'erreur
     time_lost = cputime;
     e         = [e nX-2*sum(sum((X*H').*W))+sum(sum((H*H').*(W'*W)))];

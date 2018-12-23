@@ -18,7 +18,7 @@ function [x,e,t]=nnls_FedeFarid(A,b,x0,timelimit,choix)
   Atb = A'*b;
   btb = b'*b;
   L   = max(eig(AtA));
-  gamma = ((Atb'*x0)/(x0'*AtA*x0))
+  gamma = ((Atb'*x0)/(x0'*AtA*x0));
   x     =y_k= gamma*x0;
   %Initialisation des vecteurs erreurs et temps
   temps = cputime;
@@ -48,7 +48,7 @@ function [x,e,t]=nnls_FedeFarid(A,b,x0,timelimit,choix)
         %Calculs des points : 
         
         x_n = y_k-(1/L)*(AtA*y_k-Atb);
-        x_n(x_n<0)=0;
+        x_n(x_n<0)=0; % On égales les entrés négatives à 0 pour rester dans le domaine (x>=0)
         y_k = x_n + b_k *(x_n-x);
         x=x_n;
         alpha=alpha_n;
@@ -57,9 +57,9 @@ function [x,e,t]=nnls_FedeFarid(A,b,x0,timelimit,choix)
     
     if choix==3
         n=length(x); 
-        [S,O] = sort(grad, 'descend'); 
+        [S,O] = sort(grad, 'descend'); %O nous donne permet de mettre les plus grande composantes de grad d'abord.
         for i = 1:n
-          j=O(i);
+          j=O(i);%vecteur avec l'ordre à respecter pour l'optimisation
           x_n = x;
           %La mise à jour à effectuer
           x_n(j) = x(j)-grad(j)/AtA(j,j);
@@ -67,8 +67,8 @@ function [x,e,t]=nnls_FedeFarid(A,b,x0,timelimit,choix)
             x_n(j)=0;
           endif
           delta = x_n-x;
+          x=x_n(j);
           grad = grad + AtA(:,j)*delta(j);
-          x=x_n;
         end
     end   
     
