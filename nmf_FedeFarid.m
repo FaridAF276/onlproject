@@ -33,12 +33,12 @@ function [W,H,e,t]=nmf_FedeFarid(X,W0,H0,timelimit)
     %Optimisation de H
     %COMPLETER ICI
     for i=1:n
-      [H(:,i),~,~]=nnls_FedeFarid(W0,X(:,i),H0(:,i),timelimit,2);
+      [H(:,i),~,~]=nnls_FedeFarid(W,X(:,i),H0(:,i),timelimit,2);
     end 
     %Optimisation de W
     %COMPLETER ICI
     for j=1:m
-      [rep,~,~]= nnls_FedeFarid(H0',X(j,:)',W0(j,:)',timelimit,2);
+      [rep,~,~]= nnls_FedeFarid(H',X(j,:)',W0(j,:)',timelimit,2);
       W(j,:)=rep';
     end
     %Calcul du temps et de l'erreur
