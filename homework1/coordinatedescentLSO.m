@@ -24,7 +24,7 @@ function x=coordinatedescentLSO(A,b,x0,maxiter)
     x(j)=x_n(j);
    
     grad = grad + Q(:,j)*delta(j);
-   
+    x_n = x;
   end
   fprintf('Nombre diteration '); i
 

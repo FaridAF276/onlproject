@@ -18,33 +18,29 @@ function [x,e,t]=nnls_FedeFarid(A,b,x0,timelimit,choix)
   Atb = A'*b;
   btb = b'*b;
   L   = max(eig(AtA));
-  gamma = -((Atb'*x0)/(x0'*AtA*x0))
-  x     = gamma*x0;
-  
+  gamma = ((Atb'*x0)/(x0'*AtA*x0))
+  x     =y_k= gamma*x0;
   %Initialisation des vecteurs erreurs et temps
   temps = cputime;
   t     = 0;
   e     = 0.5*(x'*AtA*x-2*Atb'*x+btb); 
   
-  alpha = 0.9; %necessaire pour la methode du gradient accelere
+  alpha = 0.3; %necessaire pour la methode du gradient accelere
   iter  = 0;
-  maxiter = ;
+  grad=AtA*x-Atb;
   while cputime-temps<=timelimit
-    iter=iter+1;
+    i=iter=iter+1;
     
     if choix==1
-      d=Atb-AtA*x; %dir initale
-      for i=1:maxiter
-    
-        x_n=x+(1/L)*d; %calcule de nouvel itéré
+        grad=AtA*x-Atb; %nouvelle direction
+        dir = -grad;
+        x_n=x+(1/L)*dir; %calcule de nouvel itéré
+        x_n(x_n<0)=0; %On égale toutes les entrées négatives à 0
         x=x_n; %nouvel itéré
-        d=Atb-AtA*x; %nouvelle direction
-      end
+      
     end
     
     if choix==2
-       x= y_k = x0;
-      for i=1:maxiter
         %Calculs des paramètres
         alpha_n=0.5*(sqrt(alpha^4 + 4*alpha^2)-alpha^2);
         b_k = (alpha*(1-alpha))/((alpha^2)+alpha_n);
@@ -52,29 +48,25 @@ function [x,e,t]=nnls_FedeFarid(A,b,x0,timelimit,choix)
         %Calculs des points : 
         
         x_n = y_k-(1/L)*(AtA*y_k-Atb);
+        x_n(x_n<0)=0;
         y_k = x_n + b_k *(x_n-x);
         x=x_n;
         alpha=alpha_n;
-      end
     end
     
     
     if choix==3
-      n = length(x);
-      grad = AtA*x-Atb;
-      for i=1:maxiter
         x_n = x;
         %itéré précédent
-        j=mod(i, length(x))+1;
-        
+        [ix, j]=max(grad); %on cherche la plus gd compo du grad
         %La mise à jour à effectuer
         x_n(j) = x(j)-grad(j)/AtA(j,j);
+        if(x_n(j)<0)
+          x(j)=x_n(j)=0;
+        endif
         delta = x_n-x;
-        x(j)=x_n(j);
-       
         grad = grad + AtA(:,j)*delta(j);
-   
-      end
+        x_n = x;
     end   
     
     %Calcul du temps et de l'erreur
