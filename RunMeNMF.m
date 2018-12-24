@@ -1,6 +1,6 @@
 clear all; clc; close all;
 load exemplenmf1.mat;
-r=6;
+r=5;
 W0= rand(6,r);
 H0=rand(r,6);
 

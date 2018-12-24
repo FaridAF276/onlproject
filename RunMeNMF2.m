@@ -29,4 +29,6 @@ I(:,:,1)=uint8(X1t);
 I(:,:,2)=uint8(X2t);
 I(:,:,3)=uint8(X3t);
 
-imwrite(I,"pl-reduite.png");
+imwrite(I,"pl-reduite2.png");
+
+fprintf('Done!');

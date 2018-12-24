@@ -7,7 +7,7 @@ nbvisages = 100; %pour ne pas travailler sur l'ensemble des 2429 visages, mais o
 Xtemp=X(:,1:nbvisages);
 affichage(Xtemp,20,19,19);
 
-r = 8;
+r = 4;
 timelimit=30;
 
 [m,n]=size(Xtemp);
