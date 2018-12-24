@@ -28,15 +28,15 @@ function [x,e,t]=nnls_FedeFarid(A,b,x0,timelimit,choix)
   alpha = 0.3; %necessaire pour la methode du gradient accelere
   iter  = 0;
   grad=AtA*x-Atb;
+  dir = -grad;
   while cputime-temps<=timelimit
     i=iter=iter+1;
     
     if choix==1
-        grad=AtA*x-Atb; %nouvelle direction
-        dir = -grad;
         x_n=x+(1/L)*dir; %calcule de nouvel itéré
         x_n(x_n<0)=0; %On égale toutes les entrées négatives à 0
         x=x_n; %nouvel itéré
+        dir=Atb-AtA*x; %on recalcule le grad pour nouvel dir
       
     end
     
@@ -60,15 +60,19 @@ function [x,e,t]=nnls_FedeFarid(A,b,x0,timelimit,choix)
         [S,O] = sort(grad, 'descend'); %O nous donne permet de mettre les plus grande composantes de grad d'abord.
         for i = 1:n
           j=O(i);%vecteur avec l'ordre à respecter pour l'optimisation
-          x_n = x;
+          x_n=x;
+          %itéré précédent
+          %j=mod(i, length(x))+1;
           %La mise à jour à effectuer
           x_n(j) = x(j)-grad(j)/AtA(j,j);
           if(x_n(j)<0)
             x_n(j)=0;
+            delta =-x(j);
+          else 
+            delta  = x_n(j)-x(j);
           endif
-          delta = x_n-x;
-          x=x_n(j);
-          grad = grad + AtA(:,j)*delta(j);
+          x(j)=x_n(j);
+          grad=grad + AtA(:,j)*delta;
         end
     end   
     
