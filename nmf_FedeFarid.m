@@ -29,16 +29,18 @@ function [W,H,e,t]=nmf_FedeFarid(X,W0,H0,timelimit)
   e     = nX-2*sum(sum(A.*W))+sum(sum(B.*(W'*W)));
   
   iter  = 0;
+  timelimitperopt = 0.1;
   while cputime-temps<=timelimit
     %Optimisation de H
     %COMPLETER ICI
+    iter = iter+1;
     for i=1:n
-      [H(:,i),~,~]=nnls_FedeFarid(W,X(:,i),H0(:,i),timelimit,2);
+      [H(:,i),~,~]=nnls_FedeFarid(W,X(:,i),H0(:,i),timelimitperopt,2);
     end 
     %Optimisation de W
     %COMPLETER ICI
     for j=1:m
-      [rep,~,~]= nnls_FedeFarid(H',X(j,:)',W0(j,:)',timelimit,2);
+      [rep,~,~]= nnls_FedeFarid(H',X(j,:)',W0(j,:)',timelimitperopt,2);
       W(j,:)=rep';
     end
     %Calcul du temps et de l'erreur
@@ -47,4 +49,5 @@ function [W,H,e,t]=nmf_FedeFarid(X,W0,H0,timelimit)
     temps     = temps+(cputime-time_lost);
     t         = [t cputime-temps];
   end
+  iter
 end

@@ -12,8 +12,8 @@ timelimit=30;
 
 [m,n]=size(Xtemp);
 
-W0=%COMPLETER ICI
-H0=%COMPLETER ICI
+W0=rand(m,r);
+H0=rand(r,n);
 [W,H,e,t]=nmf_FedeFarid(Xtemp,W0,H0,timelimit);
 
 %Affichage du facteur W
