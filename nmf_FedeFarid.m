@@ -1,11 +1,11 @@
 function [W,H,e,t]=nmf_FedeFarid(X,W0,H0,timelimit)
-  % Entrees :
+  % Input :
   % X est une matrice m x n
   % W0 est une matrice m x r
   % H0 est une matrice r x n
   % timelimit est le temps de resolution
   
-  % Sorties :
+  % Output :
   % W est une matrice m x r
   % H est une matrice r x n
   % e est le vecteur contenant les erreurs
